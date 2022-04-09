@@ -5,7 +5,7 @@
   
 </div>
 
-PHP script that fetches all the philips hue scenes for a specific room and picks a random one.
+PHP script that fetches all the philips hue scenes for a specific room and picks a random one. This script is will play the dynamic version of a scene (if it could find one), and also any Hue lab scenes.
 
 #  Installation
 This script works best when placed on a web server. In my use case, I wrote it in PHP purely so I can put it on a web server and use HomeKit automations to make a curl request to the webserver and run the script. Alternatively, it can also be kept locally and run using a cron job.
@@ -14,7 +14,7 @@ This script works best when placed on a web server. In my use case, I wrote it i
 Inside of the run.php file, edit the following:
 ```
 private $group = {the ID int of the group};
-private $hueIP = {the LAN IP of the hue bridge};
+private $hueIP = {the LAN IP of the hue bridge (or FQDN)};
 private $hueUsername = {the API username};
 ```
 ### Username (API token)
@@ -58,10 +58,12 @@ The script currently loads the scene with a brightness of `70%`. The Hue API use
 This scene works as an extension to the hue app. To add / remove scenes, just modify the scenes in the room.
 
 ## Manually excluding scenes
-On line 60, you can exclude scenes from the randomly chosen list. This is useful if you want to keep the scene in the Hue app and just want it to not be chosen by this script. In my case, I didn't want the script to pick Bright, Dimmed, or Nightlight. Do not remove `Scene previous` as this is not actually a scene, but it is an internal scene that Hue uses to restore the group to its previous scene/state.
+On line 76, you can exclude scenes from the randomly chosen list. This is useful if you want to keep the scene in the Hue app, but don't want it to be chosen by this script. In my case, I didn't want the script to pick Bright, Dimmed, or Nightlight. Do not remove `Scene previous` as this is not actually a scene, but it is an internal scene that Hue uses to restore the group to its previous scene/state.
 
 # Limitations
 Currently, there is no support (that I know of or could find online) with starting Dynamic scenes with the API. Even if the chosen scene is a Dynamic Scene, if its called with the API, it wont play. Instead it will just use the static fallback colors of the scene. This is a limitation with the current API and is rumoured to be fixed in a coming update.
+
+Update: Using the HTTPS v2 API, this functionality is possible. The script has been updated to achieve exactly this and will now play the dynamic palette of a scene :)
 
 # Purpose / My Motivation
 I wanted to randomly sort through a list of scenes automatically, without having to manually chose them in the Hue app.
