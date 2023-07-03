@@ -5,6 +5,8 @@
   
 </div>
 
+RIP to this project. See [here](https://danielangeloni.com/2023/07/03/my-home-assistant-setup#random-rgb-philips-hue-scene).
+
 PHP script that fetches all the philips hue scenes for a specific room and picks a random one. This script is will play the dynamic version of a scene (if it could find one), and also any Hue lab scenes.
 
 #  Installation
